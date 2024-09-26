@@ -109,7 +109,14 @@ int OffParser::read_from(const std::string &src_file_name, std::vector<std::arra
         for (int i = 0; i < face_vertex; i++) {
             ss >> current_info.vertices[i];
         }
-        ss >> current_info.r >> current_info.g >> current_info.b;
+
+        unsigned int test_color = 0;
+        ss >> test_color;
+        if (!ss.eof()) {
+            current_info.with_color = true;
+            current_info.r = test_color;
+            ss >> current_info.g >> current_info.b;
+        }
 
         tmp_faces.emplace_back(current_info);
         count++;
@@ -143,9 +150,16 @@ int OffParser::write_to(const std::string &dst_file_name, const std::vector<std:
         const auto vertex_size = faces[i].vertices.size();
         out << vertex_size << " ";
         for (auto j = 0; j < vertex_size; j++) {
-            out << faces[i].vertices[j] << " ";
+            out << faces[i].vertices[j];
+            if (j != vertex_size - 1) {
+                out << " ";
+            }
         }
-        out << faces[i].r << " " << faces[i].g << " " << faces[i].b << std::endl;
+
+        if (faces[i].with_color) {
+            out << " " << faces[i].r << " " << faces[i].g << " " << faces[i].b;
+        }
+        out << std::endl;
     }
     out.close();
     return 0;

@@ -9,9 +9,9 @@ struct OffFaceInfo {
     unsigned int r;
     unsigned int g;
     unsigned int b;
-
+    bool with_color;
   public:
-    OffFaceInfo() : r(0), g(0), b(0) {}
+    OffFaceInfo() : r(0), g(0), b(0), with_color(false) {}
 };
 
 class OffParser {
