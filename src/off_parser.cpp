@@ -21,7 +21,7 @@ int OffParser::read_from(const std::string &src_file_name, std::vector<std::arra
 
     int num_vertices = 0, num_faces = 0, num_edges = 0;
     while (std::getline(in, line)) {
-        if (line[0] == '#' || line[0] == '\r') {
+        if (line[0] == '#' || line[0] == '\r' || line[0] == '\n') {
             continue;
         } else if (!std::isdigit(line[0])) {
             in.close();
@@ -53,7 +53,7 @@ int OffParser::read_from(const std::string &src_file_name, std::vector<std::arra
 
     std::vector<std::array<float, 3>> tmp_vertices;
     while (count < num_vertices && std::getline(in, line)) {
-        if (line[0] == '#' || line[0] == '\r') {
+        if (line[0] == '#' || line[0] == '\r' || line[0] == '\n') {
             continue;
         } else if (!std::isdigit(line[0]) && !std::isblank(line[0]) && line[0] != '-') {
             in.close();
@@ -83,7 +83,7 @@ int OffParser::read_from(const std::string &src_file_name, std::vector<std::arra
     count = 0;
     std::vector<OffFaceInfo> tmp_faces;
     while (count < num_faces && std::getline(in, line)) {
-        if (line[0] == '#' || line[0] == '\r') {
+        if (line[0] == '#' || line[0] == '\r' || line[0] == '\n') {
             continue;
         } else if (!std::isdigit(line[0]) && !std::isblank(line[0])) {
             in.close();
